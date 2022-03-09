@@ -1,0 +1,438 @@
+@import "reset.css";
+
+:root {
+  --green: #44af35;
+  --green-dark: #16460f;
+  --yellow: #fccf00;
+  --font-color: #fff;
+  --red: #c72a2a;
+}
+
+body {
+  margin-bottom: 30px;
+
+  font-family: "Press Start 2P", sans-serif;
+
+  color: var(--font-color);
+  background-color: #000;
+  background-image: url(../bg.webp);
+  background-size: cover;
+}
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 0;
+}
+.top {
+  position: relative;
+  z-index: 2;
+  margin-top: 100px;
+}
+.title {
+  margin-bottom: 60px;
+
+  text-align: center;
+  font-size: 50px;
+  line-height: 50px;
+
+  color: var(--font-color);
+  text-shadow: 0px 5px 0px var(--green-dark);
+}
+.unknown-number-wrapper {
+  position: relative;
+}
+.btn {
+  border: none;
+
+  font: inherit;
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 503px;
+  margin: 0 auto;
+  padding: 13px 108px;
+  font-size: 40px;
+  line-height: 40px;
+
+  color: var(--font-color);
+  background-color: var(--green);
+  box-shadow: 0px 7px 0px var(--green-dark);
+
+  cursor: pointer;
+  transition: all, 0.35s;
+}
+
+.btn:active {
+  color: var(--green);
+  box-shadow: 0px 7px 0px var(--green);
+  background-color: var(--green-dark);
+}
+
+.line {
+  height: 8px;
+  background-color: var(--green);
+  box-shadow: 0px 5px 0px var(--green-dark);
+}
+.unknown-number-line {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 8px;
+
+  background-color: var(--green);
+  box-shadow: 0px 5px 0px var(--green-dark);
+  animation-name: unknownLine;
+  animation-duration: 4s;
+}
+.unknown-number-line--1 {
+  left: 0;
+}
+.unknown-number-line--2 {
+  right: 0;
+}
+
+.unknown-number {
+  position: relative;
+  max-width: fit-content;
+  min-width: 600px;
+  box-sizing: border-box;
+  height: 72px;
+  padding: 13px 36px;
+  margin: 0 auto 25px auto;
+
+  font-size: 36px;
+  line-height: 36px;
+  text-align: center;
+
+  color: var(--font-color);
+  background-color: var(--green);
+  box-shadow: 0px 5px 0px var(--green-dark);
+  z-index: 1;
+
+  transition: all, 0.35s;
+  animation-name: unknownNumber;
+  animation-delay: 1s;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+.unknown-number-enter {
+  border: none;
+  width: 36px;
+  max-width: 144px;
+
+  font: inherit;
+  text-align: center;
+
+  color: var(--yellow);
+  background-color: transparent;
+  border: 4px solid transparent;
+  border-bottom-color: var(--yellow);
+}
+.unknown-number-enter--error {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+.unknown-number-enter:focus-visible {
+  outline: none;
+}
+.unknown-number-enter--2 {
+  width: 108px;
+}
+.unknown-number-notice {
+  font-size: 24px;
+  line-height: 24px;
+
+  color: var(--font-color);
+
+  text-align: center;
+  text-shadow: 0px 1.25px 0px #fccf00;
+  animation-name: unknownNotice;
+  animation-duration: 1s;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+.unknown-number-random {
+  vertical-align: middle;
+  color: var(--yellow);
+}
+.bottom {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.cheack-wrapper {
+  display: block;
+  margin-top: 80px;
+
+  transition: all, 0.35s;
+}
+.cheack-input {
+  position: relative;
+  z-index: 2;
+  display: block;
+  box-sizing: border-box;
+  border: 8px solid #44af35;
+  width: 300px;
+  height: 110px;
+  padding: 33px 22px;
+  margin: 0 auto;
+
+  text-align: center;
+  font-family: inherit;
+  font-size: 36px;
+  line-height: 36px;
+
+  color: var(--yellow);
+  background-color: #08090c;
+  box-shadow: 0px 7px 0px var(--green-dark);
+
+  opacity: 0;
+}
+.cheack-input::placeholder {
+  color: var(--yellow);
+  opacity: 0.85;
+}
+.cheack-input:focus-visible {
+  outline: none;
+}
+.cheack-line {
+  position: absolute;
+  opacity: 0;
+}
+.cheack-line--1,
+.cheack-line--2 {
+  top: 20%;
+  height: 8px;
+}
+.cheack-line--1 {
+  left: 150px;
+}
+.cheack-line--2 {
+  right: 150px;
+}
+.cheack-line--3,
+.cheack-line--4 {
+  z-index: -1;
+  top: -44%;
+  height: 94%;
+  width: 8px;
+}
+.cheack-line--3 {
+  left: 150px;
+  box-shadow: 4px 0px 0px var(--green-dark);
+}
+.cheack-line--4 {
+  right: 150px;
+  box-shadow: -4px 0px 0px var(--green-dark);
+}
+
+.btn-wrapper {
+  margin-top: 190px;
+}
+.btn-start {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 503px;
+  margin: 0 auto;
+
+  padding: 13px 108px;
+
+  font-size: 40px;
+  line-height: 40px;
+
+  animation-name: btnStart;
+  animation-delay: 3s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  transform: scale(0);
+}
+.btn-line {
+  position: absolute;
+}
+.btn-line--1,
+.btn-line--2 {
+  top: -44%;
+  width: 8px;
+  height: 0;
+
+  animation-name: btnStartLines1;
+  animation-delay: 1.5s;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+}
+.btn-line--1 {
+  left: 280px;
+  box-shadow: 4px 0px 0px var(--green-dark);
+}
+.btn-line--2 {
+  right: 280px;
+  box-shadow: -4px 0px 0px var(--green-dark);
+}
+.btn-line--3,
+.btn-line--4 {
+  height: 8px;
+  bottom: 40px;
+
+  animation-name: btnStartLines2;
+  animation-delay: 3.3s;
+  animation-duration: 1.25s;
+  animation-fill-mode: forwards;
+}
+.btn-line--3 {
+  left: 280px;
+  bottom: 40px;
+}
+.btn-line--4 {
+  right: 280px;
+  bottom: 40px;
+}
+.score {
+  position: absolute;
+  top: 43%;
+  z-index: 2;
+
+  padding: 20px;
+  border: 8px solid var(--green);
+
+  font-size: 30px;
+  font-weight: 500;
+
+  background-color: #08090c;
+  box-shadow: 0px 7px 0px var(--green-dark);
+
+  animation-name: scoreAnimate;
+  animation-delay: 2s;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+.now-score {
+  right: 150px;
+}
+.best-score {
+  left: 150px;
+}
+
+.animate-line--1 {
+  animation-name: cheackLine1;
+  animation-fill-mode: forwards;
+  animation-delay: 1.1s;
+  animation-duration: 1s;
+  opacity: 1;
+}
+.animate-line--2 {
+  animation-name: cheackLine2;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  opacity: 1;
+}
+.cheack-input-animate {
+  animation-name: cheackInputAnimate;
+  animation-fill-mode: forwards;
+  animation-delay: 1.7s;
+  animation-duration: 1s;
+}
+
+@keyframes unknownLine {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes unknownNumber {
+  0% {
+    opacity: 0;
+    transform: scale(0.1, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+@keyframes btnStartLines1 {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 484px;
+  }
+}
+@keyframes btnStartLines2 {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 200px;
+  }
+}
+@keyframes btnStart {
+  0% {
+    opacity: 0;
+    transform: scale(0.1, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+@keyframes unknownNotice {
+  0% {
+    opacity: 0;
+    transform: scale(0.1, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes cheackLine1 {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 30%;
+  }
+}
+
+@keyframes cheackLine2 {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 65%;
+  }
+}
+@keyframes cheackInputAnimate {
+  0% {
+    opacity: 0;
+    transform: scale(0.1, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+@keyframes scoreAnimate {
+  0% {
+    opacity: 0;
+    transform: scale(0.1, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon" />
+    <script defer src="js/script.js"></script>
+    <title>Угадай Число!</title>
+  </head>
+  <body>
+    <div class="top">
+      <h1 class="title">У</h1>
+
+      <div class="unknown-number-wrapper">
+        <div class="unknown-number-line line unknown-number-line--1"></div>
+        <div class="unknown-number">
+          От
+          <input
+            class="unknown-number-enter unknown-number-enter--1"
+            min="1"
+            max="1000"
+            value="1"
+            type="number"
+            onkeydown="this.style.width = ((this.value.length + 1) *  36) + 'px';"
+          />
+          до
+          <input
+            class="unknown-number-enter unknown-number-enter--2"
+            value="100"
+            type="number"
+            min="2"
+            max="1000"
+            onkeydown="this.style.width = ((this.value.length + 1) *  36) + 'px';"
+          />
+        </div>
+        <div class="unknown-number-line line unknown-number-line--2"></div>
+      </div>
+
+      <div class="unknown-number-notice">Введите числа от 1 до 1000</div>
+    </div>
+    <div class="bottom">
+      <form class="cheack-wrapper">
+        <span class="cheack-line line cheack-line--1"></span>
+        <span class="cheack-line line cheack-line--2"></span>
+        <input class="cheack-input" type="number" placeholder="???" />
+        <span class="cheack-line line cheack-line--3"></span>
+        <span class="cheack-line line cheack-line--4"></span>
+        <span class="best-score score">Рекорд: 0</span>
+        <span class="now-score score">Очки: 100</span>
+      </form>
+      <div class="btn-wrapper">
+        <span class="btn-line line btn-line--1"></span>
+        <span class="btn-line line btn-line--2"></span>
+        <button class="btn btn-start">Начать</button>
+        <span class="btn-line line btn-line--3"></span>
+        <span class="btn-line line btn-line--4"></span>
+      </div>
+    </div>
+  </body>
+</html>
