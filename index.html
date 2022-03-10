@@ -11,7 +11,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon" />
+    <link rel="shortcut icon" href="img/favicon.svg" type="image/x-icon" />
     <script defer src="js/script.js"></script>
     <title>Угадай Число!</title>
   </head>
@@ -25,18 +25,18 @@
           От
           <input
             class="unknown-number-enter unknown-number-enter--1"
+            disabled
             min="1"
             max="1000"
             value="1"
             type="number"
-            onkeydown="this.style.width = ((this.value.length + 1) *  36) + 'px';"
           />
           до
           <input
             class="unknown-number-enter unknown-number-enter--2"
             value="100"
             type="number"
-            min="2"
+            min="10"
             max="1000"
             onkeydown="this.style.width = ((this.value.length + 1) *  36) + 'px';"
           />
@@ -44,17 +44,26 @@
         <div class="unknown-number-line line unknown-number-line--2"></div>
       </div>
 
-      <div class="unknown-number-notice">Введите числа от 1 до 1000</div>
+      <div class="unknown-number-notice">Введите число от 10 до 1000</div>
     </div>
     <div class="bottom">
       <form class="cheack-wrapper">
         <span class="cheack-line line cheack-line--1"></span>
         <span class="cheack-line line cheack-line--2"></span>
-        <input class="cheack-input" type="number" placeholder="???" />
+        <input
+          class="cheack-input"
+          type="number"
+          disabled
+          placeholder="???"
+          min="1"
+        />
         <span class="cheack-line line cheack-line--3"></span>
         <span class="cheack-line line cheack-line--4"></span>
-        <span class="best-score score">Рекорд: 0</span>
-        <span class="now-score score">Очки: 100</span>
+
+        <span class="now-score">
+          Очки:
+          <span class="score">0</span>
+        </span>
       </form>
       <div class="btn-wrapper">
         <span class="btn-line line btn-line--1"></span>

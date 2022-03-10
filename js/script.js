@@ -1,7 +1,6 @@
 "use strict";
 
 // Анимация печати текста
-
 let typeWriterIndex = 0;
 let typeWriterText = "гадай число!";
 let typeWriterPlace = document.querySelector(".title");
@@ -14,66 +13,127 @@ function typeWriter() {
 }
 typeWriter();
 
-//
+// Основные переменные
 const fromNum = document.querySelector(".unknown-number-enter--1"),
   toNum = document.querySelector(".unknown-number-enter--2"),
   btnStart = document.querySelector(".btn-start"),
   cheackForm = document.querySelector(".cheack-wrapper"),
   cheackNum = document.querySelector(".cheack-input"),
   unknownNumber = document.querySelector(".unknown-number"),
-  noticeNum = document.querySelector(".unknown-number-notice");
+  noticeNum = document.querySelector(".unknown-number-notice"),
+  nowScore = document.querySelector(".score");
 
-let cheackBtn;
+let numberRound = 0;
 let randomNumber;
-let guessedRight;
 
+// Генерирует случайное число в диапозоне от до
 function generateRandomNum(min, max) {
   randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// Если человек угадал число, то генерируется новое число и меняются значения, очки НЕ обнуляются
+function newGame() {
+  cheackNum.value = "";
+  cheackNum.disabled = false;
+  btnStart.textContent = "Угадать";
+  generateRandomNum(Number(fromNum.value), Number(toNum.value));
+  unknownNumber.innerHTML = `<span class="unknown-number-random">???</span>`;
+  noticeNum.textContent = `Число от ${fromNum.value} до ${toNum.value}`;
+  console.log(randomNumber);
+  ++numberRound;
+}
+
+// При нажатие на кнопку "Начать" запускается игра
 function startGame() {
   // Если нету ошибок
-  if (
-    Number(fromNum.value) > 0 &&
-    Number(toNum.value) < 1001 &&
-    Number(toNum.value) > 0 &&
-    Number(fromNum.value) < 1001
-  ) {
-    btnStart.textContent = "Угадать";
-    generateRandomNum(Number(fromNum.value), Number(toNum.value));
-    unknownNumber.innerHTML = `<span class="unknown-number-random">???</span>`;
-    noticeNum.textContent = `Число от ${fromNum.value} до ${toNum.value}`;
+  if (Number(toNum.value) < 1001 && Number(toNum.value) > 9) {
+    // Если первая игра
+    if (numberRound === 0) {
+      document.querySelector(".now-score").style.animationName = "scoreAnimate";
+      document
+        .querySelector(".cheack-line--1")
+        .classList.add("animate-line--1");
+      document
+        .querySelector(".cheack-line--2")
+        .classList.add("animate-line--1");
+      document
+        .querySelector(".cheack-line--3")
+        .classList.add("animate-line--2");
+      document
+        .querySelector(".cheack-line--4")
+        .classList.add("animate-line--2");
+      cheackNum.classList.add("cheack-input-animate");
+      console.log(numberRound);
+    }
 
-    document.querySelector(".cheack-line--1").classList.add("animate-line--1");
-    document.querySelector(".cheack-line--2").classList.add("animate-line--1");
-    document.querySelector(".cheack-line--3").classList.add("animate-line--2");
-    document.querySelector(".cheack-line--4").classList.add("animate-line--2");
-    cheackNum.classList.add("cheack-input-animate");
-
-    console.log(randomNumber);
+    // Очки = Максимальное число деленное на половину
+    nowScore.textContent = Number(toNum.value / 2);
+    newGame();
   }
 }
+
+// Проверяется введенное число с случайным числом
 function cheackNumFunc() {
-  if (Number(cheackNum.value) === randomNumber) {
-    unknownNumber.innerHTML = `<span class="unknown-number-random">${randomNumber}</span>`;
-    btnStart.textContent = "Еще раз";
-    noticeNum.textContent = `Вы угадали! Это ${randomNumber}`;
-    guessedRight = true;
+  // Подсказка если случайное число больше/меньше заданого то выводится больше/меньше
+  function promptNum() {
+    if (randomNumber < Number(cheackNum.value)) {
+      return `меньше ${cheackNum.value}`;
+    } else if (randomNumber > Number(cheackNum.value)) {
+      return `больше ${cheackNum.value}`;
+    }
+  }
+  // Калькулятор очков
+  function scoreCalc() {
+    // Если угадал то добавляется максимальное число деленное на 2, 3 раза
+    if (Number(cheackNum.value) === randomNumber) {
+      nowScore.textContent =
+        Number(nowScore.textContent) +
+        Math.ceil(Number(toNum.value / 2 / 2 / 2));
+    } else {
+      // Если не угадал убовляются колво очков деленное максимальное число на , 5 раз
+      nowScore.textContent =
+        Number(nowScore.textContent) -
+        Math.ceil(Number(toNum.value / 2 / 2 / 2 / 2 / 2));
+    }
+  }
+
+  // Если угадал меняются значения и уведовляется об этом
+  if (Number(cheackNum.value.length) !== 0) {
+    if (Number(cheackNum.value) === randomNumber) {
+      unknownNumber.innerHTML = `<span class="unknown-number-random">${randomNumber}</span>`;
+      btnStart.textContent = "Еще раз";
+      noticeNum.textContent = `Вы угадали! Это ${randomNumber}`;
+
+      scoreCalc();
+      cheackNum.disabled = true;
+
+      //  Если не угадал выводится подсказка число меньше/больше заданогол
+    } else if (Number(cheackNum.value) !== randomNumber) {
+      noticeNum.textContent = `Число от ${fromNum.value} до ${
+        toNum.value
+      }  и ${promptNum()}`;
+      cheackNum.disabled = false;
+      scoreCalc();
+    }
   } else {
-    noticeNum.textContent = `Число от ${fromNum.value} до ${toNum.value} и меньше/больше ${cheackNum.value}`;
-    guessedRight = false;
+    noticeNum.textContent = `Число от ${fromNum.value} до ${toNum.value}  и не пустое значение`;
+  }
+
+  // Если кончились очки, дается возможность начать игру заново
+  if (0 >= Number(nowScore.textContent)) {
+    nowScore.textContent = "0";
+    noticeNum.textContent = "Вы проиграли!";
+    btnStart.textContent = "Начать";
+    cheackNum.disabled = true;
+    cheackNum.value = `${randomNumber}`;
+    unknownNumber.innerHTML = `<span class="unknown-number-random">${randomNumber}</span>`;
   }
 }
+
 // Input значения если меньше 1 или больше 1000 выделяет ошибку и добавляет класс ошибка
-fromNum.addEventListener("input", () => {
-  if (Number(fromNum.value) < 1 || Number(fromNum.value) > 1001) {
-    fromNum.classList.add("unknown-number-enter--error");
-  } else {
-    fromNum.classList.remove("unknown-number-enter--error");
-  }
-});
+
 toNum.addEventListener("input", () => {
-  if (Number(toNum.value) < 1 || Number(toNum.value) > 1001) {
+  if (Number(toNum.value) < 10 || Number(toNum.value) >= 1001) {
     toNum.classList.add("unknown-number-enter--error");
   } else {
     toNum.classList.remove("unknown-number-enter--error");
@@ -87,7 +147,7 @@ btnStart.addEventListener("click", () => {
   } else if (btnStart.textContent === "Угадать") {
     cheackNumFunc();
   } else if (btnStart.textContent === "Еще раз") {
-    startGame();
+    newGame();
   }
 });
 
