@@ -492,3 +492,21 @@ body::after {
     padding: 12px;
   }
 }
+
+@media (max-width: 430px) {
+  .unknown-number {
+    max-width: 100%;
+    font-size: 18px;
+    padding: 10px 6px;
+  }
+}
+
+.contact {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  text-decoration: none;
+  top: 15px;
+  left: 15px;
+  z-index: 1;
+}

@@ -23,6 +23,7 @@ const fromNum = document.querySelector(".unknown-number-enter--1"),
   noticeNum = document.querySelector(".unknown-number-notice"),
   nowScore = document.querySelector(".score");
 
+let score;
 let numberRound = 0;
 let randomNumber;
 
@@ -49,6 +50,7 @@ function startGame() {
   if (Number(toNum.value) < 1001 && Number(toNum.value) > 9) {
     // Если первая игра
     if (numberRound === 0) {
+      // Дает классы для анимированого появления элементов
       document.querySelector(".now-score").style.animationName = "scoreAnimate";
       document
         .querySelector(".cheack-line--1")
@@ -63,11 +65,11 @@ function startGame() {
         .querySelector(".cheack-line--4")
         .classList.add("animate-line--2");
       cheackNum.classList.add("cheack-input-animate");
-      console.log(numberRound);
     }
 
     // Очки = Максимальное число деленное на половину
-    nowScore.textContent = Number(toNum.value / 2);
+    score = Math.ceil(Number(toNum.value / 2));
+    nowScore.textContent = score;
     newGame();
   }
 }
@@ -86,14 +88,12 @@ function cheackNumFunc() {
   function scoreCalc() {
     // Если угадал то добавляется максимальное число деленное на 2, 3 раза
     if (Number(cheackNum.value) === randomNumber) {
-      nowScore.textContent =
-        Number(nowScore.textContent) +
-        Math.ceil(Number(toNum.value / 2 / 2 / 2));
+      score += Math.ceil(Number(toNum.value / 2 / 2 + 1));
+      nowScore.textContent = score;
     } else {
       // Если не угадал убовляются колво очков деленное максимальное число на , 5 раз
-      nowScore.textContent =
-        Number(nowScore.textContent) -
-        Math.ceil(Number(toNum.value / 2 / 2 / 2 / 2 / 2));
+      score -= Math.ceil(Number(toNum.value / 2 / 2 / 2 / 2 / 2));
+      nowScore.textContent = score;
     }
   }
 
